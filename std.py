@@ -351,15 +351,19 @@ keymap.update({
 
 #---- jsc added the following
 keymap.update({
-	'say <dgndictation> [over]': text,
+    'say <dgndictation> [over]': text,
     'cap <dgndictation> [over]': sentence_text,
     '(find text | marco) <dgndictation> [over]': [Key("cmd-f"), text, Key("enter")],
     '(find text | marco)': Key("cmd-f"),
     '(find selected text | find selection | sell find)': Key("cmd-e cmd-f enter"),
     '(find next | marnek)': Key('cmd-g'),
     '(find preev | marpreev)': Key('cmd-shift-g'),
-	'close window': Key('cmd-w'),
-	'quit window': Key('cmd-q'),
+    'set selection': Key('cmd-e'),
+    'set replacement': Key('cmd-shift-e'),
+    '(replace selected text | replace selection | sell find ace)': Key('cmd-e cmd-alt-f'),
+    '(replace text | find ace)': Key('cmd-alt-f'),
+    'close window': Key('cmd-w'),
+    'quit window': Key('cmd-q'),
 })
 
 
