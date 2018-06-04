@@ -353,9 +353,11 @@ keymap.update({
 keymap.update({
 	'say <dgndictation> [over]': text,
     'cap <dgndictation> [over]': sentence_text,
-	'marco': Key('cmd-f'),
-	'marnek': Key('cmd-g'),
-	'marnek': Key('cmd-g'),
+    '(find text | marco) <dgndictation> [over]': [Key("cmd-f"), text, Key("enter")],
+    '(find text | marco)': Key("cmd-f"),
+    '(find selected text | find selection | sell find)': Key("cmd-e cmd-f enter"),
+    '(find next | marnek)': Key('cmd-g'),
+    '(find preev | marpreev)': Key('cmd-shift-g'),
 	'close window': Key('cmd-w'),
 	'quit window': Key('cmd-q'),
 })
