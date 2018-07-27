@@ -17,12 +17,12 @@ keymap = {
     'colon': ':',
 	
     '(square | left square [bracket] | brackorp)': '[',
-    '(rsquare | are square | right square [bracket] | brackose)': ']',
-    '(paren | left paren | pracorp)': '(',
-    '(rparen | are paren | right paren | pracose)': ')',
-    '(brace | left brace | kirksorp)': '{',
-    '(rbrace | are brace | right brace | kirkos)': '}',
-    '(angle | left angle | less than)': '<',
+    '(are square | right square [bracket] | brackose)': ']',
+    '(paren | left paren | open paren | pracorp)': '(',
+    '(are paren | right paren | close paren | pracose)': ')',
+    '(left brace | open brace | kirkorp | kirksorp)': '{',			# jsc removed 'brace'. added open brace and kirkorp
+    '(are brace | right brace | close brace | kirkos)': '}',
+    '(angle | left angle | less than | clangle)': '<',
     '(rangle | are angle | right angle | greater than)': '>',
 
     '(star | asterisk)': '*',
@@ -44,7 +44,7 @@ keymap = {
     '[forward] slash': '/',
     'backslash': '\\',
 
-    '(dot dot | dotdot | doodle)': '..',
+    '(dot dot | dotdot)': '..',		# jsc removed 'doodle' synonym
     '(enter | shock)': Key('enter'),
     '(delete | junk)': Key('backspace'),
     'spunk': Key('delete'),
