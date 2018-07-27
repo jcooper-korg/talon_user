@@ -34,7 +34,7 @@ keymap = {
     '(ranqual | nockle)': ' !== ',
     '(call | prekris)': '()',
 
-    '(index | brax)': ['[]', Key('left')],
+    'brax': ['[]', Key('left')],		# jsc removed index synonym
     '(empty dict | kirk)': ['{}', Key('left')],
 
     '(empty array | brackers)': '[]',
@@ -47,13 +47,12 @@ keymap = {
     'lessqual': ' <= ',
     'grayqual': ' >= ',
     'equeft': ' = ',
-    'daplush': ' + ',
 
     '(arrow | lambo)': '->',
     'shrocket': ' => ',
 
 	'state if': ['if ()', Key('left')],
-    'state else': ['else {}', Key('left enter')],
+    'state else': ['else', Key('enter'), '{}', Key('left enter tab')],	# jsc added tab at end
     'state else if': ['else if ()', Key('left')],
     'state while': ['while ()', Key('left')],
     'state for': ['for ()', Key('left')],
@@ -70,9 +69,10 @@ keymap = {
     'word import': 'import ',
 
     # jsc added: C preprocessor, C++ keywords
+    'shocker block': [Key("cmd-right enter"), '{}', Key('left enter tab')],
     'pragma once': '#pragma once',
     '(pound include | hashtag include | see include)': ['#include ""', Key('left')],
-    '(pound angle include | hashtag angle include | see angle include)': ['#include <>', Key('left')],
+    '(pound angle include | hashtag angle include | see angle include | pound system include)': ['#include <>', Key('left')],
     'pound define': '#define ',
     'pound if': '#if ',
     'pound else': '#else',
@@ -85,6 +85,39 @@ keymap = {
 	'protected': 'protected',
 	'private': 'private',
     'word no pointer': 'nullptr',
+	'care star': 'char*',
+	'init' : 'init',
+	'shrink integer': 'int',
+	'void': 'void',
+	'float': 'float',
+	'bool': 'bool',
+	'enum' : 'enum',
+	'virtual': 'virtual',
+	'return': 'return',
+	'null pointer': 'nullptr',
+	'false' : 'false',
+	'true' : 'true',
+	'namespace' : 'namespace',
+	'else': 'else',
+    'daplush': ' + ',
+    'daminus': ' - ',
+    'declangle | daclangle': ' < ',
+    'derangle | darangle': ' > ',
+	'goal post': ' || ',
+    'stood': 'std',
+    'typedef': 'typedef',
+    'you till': 'util',
+    'to do': 'todo: ',
+    'tee be dee': 'tbd: ',
+	'(standard | stood) string': 'std::string',
+	'(standard  | stood) vector': ['std::vector<>', Key('left')],
+	'(standard | stood) list': ['std::list<>', Key('left')],
+	'(standard | stood) map': ['std::map<>', Key('left')],
+	'(standard | stood) unique pointer': ['std::unique_ptr<>', Key('left')],
+	'(standard | stood) array': ['std::array<>', Key('left')],
+
+
+	#TODO: for loop <iterator> <number>  =>  for (int iterator = 0; iterator < number; ++iterator)
 
     '(coif | dubquote block | double quote block)' : ['""', Key('left')],
     '(posh | quote block)' : ["''", Key('left')],
