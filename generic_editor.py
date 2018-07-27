@@ -82,19 +82,6 @@ def snipline():
     press('ctrl-a')
     press('cmd-left')
 
-def find_next(m):
-    press('cmd-f')
-    Str(str(m.dgndictation[0]._words[0]))(None)
-    press('escape')
-
-def find_previous(m):
-    press('left')
-    press('cmd-f')
-    Str(str(m.dgndictation[0]._words[0]))(None)
-    press('cmd-shift-g')
-    press('escape')
-
-
 keymap = {
     'sprinkle' + optional_numerals: jump_to_bol,
     'spring' + optional_numerals: jump_to_eol_and(jump_to_beginning_of_text),
@@ -111,10 +98,6 @@ keymap = {
     'shackle': Key('cmd-right shift-cmd-left'),
 
     'bracken': [Key('cmd-shift-ctrl-right')],
-
-    # poor implementations:
-    'crew <dgndictation>': find_next,
-    'trail <dgndictation>': find_previous,
 
     'shockey': Key('ctrl-a cmd-left enter up'),
     'shockoon': Key('cmd-right enter'),

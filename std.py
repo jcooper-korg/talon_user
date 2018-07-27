@@ -6,7 +6,8 @@ from talon import ctrl, clip
 from talon_init import TALON_HOME, TALON_PLUGINS, TALON_USER
 import string
 
-alpha_alt = 'air bat cap die each fail gone harm sit jury crash look mad near odd pit quest red sun trap urge vest whale box yes zip'.split()
+alpha_alt = 'arch brov char dell etch fomp goof hark ice jinx koop lug mowsh nerb ork pooch quosh rosh sun teak unks verge womp trex yang zooch'.split()
+#alpha_alt = 'air bat cap die each fail gone harm sit jury crash look mad near odd pit quest red sun trap urge vest whale box yes zip'.split()
 alnum = list(zip(alpha_alt, string.ascii_lowercase)) + [(str(i), str(i)) for i in range(0, 10)]
 
 alpha = {}
@@ -31,6 +32,8 @@ mapping = {
     'end if' : 'endif',
 	'multi-' : 'multi',
 	'polly' : 'poly',
+	'numb' : 'num',
+	'portamento' : 'portamento', 
 }
 punctuation = set('.,-!?')
 
@@ -146,11 +149,7 @@ keymap.update({
 
     '(%s)+ [<dgndictation>]' % (' | '.join(formatters)): FormatText,
 
-    'tab':   Key('tab'),
-    'left':  Key('left'),
-    'right': Key('right'),
-    'up':    Key('up'),
-    'down':  Key('down'),
+    # jsc moved tab/arrow-keys to navigation.py
 
     'delete': Key('backspace'),
 
@@ -234,12 +233,12 @@ keymap.update({
     'tip you went 16': 'uint16_t ',
     'tip pent 8': 'int8_t ',
     'tip you went 8': 'uint8_t ',
-    'tip size': 'size_t',
+#    'tip size': 'size_t',				# jsc removed
     'tip float': 'float ',
     'tip double': 'double ',
 
     'args': ['()', Key('left')],
-    'index': ['[]', Key('left')],
+	'brax': ['[]', Key('left')],			# jsc renamed from index to brax
     'block': [' {}', Key('left enter enter up tab')],
     'empty array': '[]',
     'empty dict': '{}',
@@ -296,7 +295,7 @@ keymap.update({
     '(minus | dash)': '-',
     'plus': '+',
     'arrow': '->',
-    'call': '()',
+#    'call': '()',			# jsc removed this
     'indirect': '&',
     'dereference': '*',
     'op equals': ' = ',
@@ -335,21 +334,62 @@ keymap.update({
 
     'new window': Key('cmd-n'),
     'next window': Key('cmd-`'),
-    'last window': Key('cmd-shift-`'),
+    '(last | preev) window': Key('cmd-shift-`'),	# jsc added prev
     'next app': Key('cmd-tab'),
-    'last app': Key('cmd-shift-tab'),
+    '(last | preev) app': Key('cmd-shift-tab'),		# jsc added prev
     'next tab': Key('ctrl-tab'),
     'new tab': Key('cmd-t'),
-    'last tab': Key('ctrl-shift-tab'),
+    '(last | preev) tab': Key('ctrl-shift-tab'),	# jsc added prev
 
     'next space': Key('cmd-alt-ctrl-right'),
-    'last space': Key('cmd-alt-ctrl-left'),
+    '(last | preev) space': Key('cmd-alt-ctrl-left'),
 
     'scroll down': [Key('down')] * 30,
     'scroll up': [Key('up')] * 30,
 })
 
 #---- jsc added the following
+def select_text_to_left_of_cursor(m, cursorKey, clipboardSelectKey='shift-home'):
+	key = join_words(parse_words(m)).lower()
+	with clip.capture() as clipboardText:
+		press(clipboardSelectKey, wait=20000)
+		press('cmd-c', wait=20000)
+		press('right', wait=20000)
+	searchText = clipboardText.get().lower()
+	result = searchText.rfind(key)
+	if result == -1:
+		return False
+	# cursor over to the found key text and select the matching text
+	for i in range(result, len(searchText) - len(key)):
+		press(cursorKey, wait=0)
+	for i in range(0, len(key)):
+		press('shift-left', wait=0)
+	return True
+
+def select_text_to_right_of_cursor(m, cursorKey, clipboardSelectKey='shift-end'):
+	key = join_words(parse_words(m)).lower()
+	with clip.capture() as clipboardText:
+		press(clipboardSelectKey, wait=20000)
+		press('cmd-c', wait=20000)
+		press('left', wait=20000)
+	searchText = clipboardText.get().lower()
+	result = searchText.find(key)
+	if result == -1:
+		return False
+	# cursor over to the found key text and select the matching text
+	for i in range(0, result):
+		press(cursorKey, wait=0)
+	for i in range(0, len(key)):
+		press('shift-right', wait=0)
+	return True
+
+def select_text_on_same_line(m):
+	key = join_words(parse_words(m)).lower()
+	# first check to the left of the cursor
+	if select_text_to_left_of_cursor(m, cursorKey='left', clipboardSelectKey='shift-ctrl-a') == False:
+		# if nothing found, then check to the right of the cursor
+		select_text_to_right_of_cursor(m, cursorKey='right', clipboardSelectKey='shift-ctrl-e')
+
 keymap.update({
     'say <dgndictation> [over]': text,
     'cap <dgndictation> [over]': sentence_text,
@@ -364,6 +404,11 @@ keymap.update({
     '(replace text | find ace)': Key('cmd-alt-f'),
     'close window': Key('cmd-w'),
     'quit window': Key('cmd-q'),
+    '(crew | find right) <dgndictation> [over]': lambda m: select_text_to_right_of_cursor(m, cursorKey='right'),
+    '(selcrew | crew select | sell find right) <dgndictation> [over]': lambda m: select_text_to_right_of_cursor(m, cursorKey='shift-right'),
+    '(trail | find left) <dgndictation> [over]': lambda m: select_text_to_left_of_cursor(m, cursorKey='left'),
+    '(seltrail | trail select | sell find left) <dgndictation> [over]': lambda m: select_text_to_left_of_cursor(m, cursorKey='shift-left'),
+    'kerleck <dgndictation> [over]': select_text_on_same_line,
 })
 
 
@@ -375,6 +420,5 @@ alpha.update({'option %s' % k: Key('alt-%s' % v) for k, v in alnum})
 alpha.update({'option shift %s' % k: Key('alt-shift-%s' % v) for k, v in alnum})
 
 # this was the Voice Code alphabet:
-# alpha_alt = 'arch brov char dell etch fomp goof hark ice jinx koop lug mowsh nerb ork pooch quosh rosh sook teak unks verge womp trex yang zooch'.split()
 
 ctx.keymap(keymap)
