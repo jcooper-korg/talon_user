@@ -9,5 +9,6 @@ ctx.keymap({
 	'collapse': Key('cmd-left'),
 	'expand': Key('cmd-right'),
 	'open': Key('cmd-down'),
+	'trash it': Key('cmd-backspace'),
 	'show package contents': Key('cmd-alt-o'),
  })
