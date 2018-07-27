@@ -6,9 +6,9 @@ from talon.voice import Key, Context
 ctx = Context('xcode', bundle='com.apple.dt.Xcode')
 
 ctx.keymap({
-    '(build [target] | chom brov)': Key('cmd-b'),
-    '(stop [target] | chom peer)': Key('cmd-.'),
-    '(run [target] | start [target] | chom rosh)': Key('cmd-r'),
+    '(build it | chom brov)': Key('cmd-b'),
+    '(stop it | chom peer)': Key('cmd-.'),
+    '(run it | chom rosh)': Key('cmd-r'),
 	'go back': Key('cmd-ctrl-left'),
 	'go fore': Key('cmd-ctrl-right'),
 	'find in proj': Key('cmd-shift-f'),
@@ -33,8 +33,14 @@ ctx.keymap({
 	'quick open': Key('cmd-shift-o'),
     'jolt': Key('ctrl-a shift-down cmd-c down cmd-v' ),
 	'comm skoosh': '// ',
-	'comm line': ['//------------------------------------------------------------------------------', Key('enter')], 
+	'comm line': ['//------------------------------------------------------------------------------', Key('enter')],
+	'(select partial word left | sell partial word left | sell partial left | sell sub left)': Key('shift-ctrl-left'),
+    '(select partial word right | sell partial word right | sell partial right | sell sub right)': Key('shift-ctrl-right'),
+
 	# the following require custom key bindings in xcode preferences
+    '(partial word left | subword left | wonkrim)': Key('alt-ctrl-left'),
+    '(partial word right | subword right | wonkrish)': Key('alt-ctrl-right'),
+
 	'show blame for line': Key('cmd-alt-ctrl-b'),
 	'(snipline | delete line)': Key('cmd-alt-ctrl-shift-backspace'),
 })
