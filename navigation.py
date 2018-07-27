@@ -26,7 +26,7 @@ keymap = {
     # '(new tab | peach)': Key('cmd-t'),
 
     # deleting
-    '(snipline | delete line)': Key('cmd-right cmd-backspace'),
+#    '(snipline | delete line)': Key('cmd-right cmd-backspace'),		# jsc commented out- use the implementation in generic_editor.py instead
     'steffi': Key('alt-ctrl-backspace'),
     'stippy': Key('alt-ctrl-delete'),
     '(carmex | delete word left | dell word left)': Key('alt-backspace'),
@@ -40,22 +40,24 @@ keymap = {
     '(tab | tarp)': Key('tab'),
     'tarsh': Key('shift-tab'),
     'slap': [Key('cmd-right enter')],
-    'shocker': [Key('cmd-left enter up')],
-    '(partial word left | wonkrim)': Key('alt-ctrl-left'),
-    '(partial word right | wonkrish)': Key('alt-ctrl-right'),
+    #'shocker': [Key('cmd-left enter up')],
     '(word left | fame)': Key('alt-left'),
     '(word right | fish)': Key('alt-right'),
     'ricky': Key('cmd-right'),
     'lefty': Key('cmd-left'),
     '(left | crimp)': Key('left'),
     '(right | chris)': Key('right'),
-    '(up | jeep)': Key('up'),
-    '(down | dune | doom)':  Key('down'),
+    '(key up | jeep)': Key('up'),				# added 'key' in front to avoid misrecognized 'up' from typing noises
+    '(key down | dune | doom)':  Key('down'),
 
     'scroll down': [Key('down')] * 30,
     '(doomway | scroll way down)': Key('cmd-down'),
     'scroll up': [Key('up')] * 30,
     '(jeepway | scroll way up)': Key('cmd-up'),
+
+    # jsc added
+    'page up' : Key('pageup'),
+    'page down' : Key('pagedown'),
 }
 
 ctx.keymap(keymap)
