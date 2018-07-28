@@ -16,6 +16,7 @@ ctx.keymap({
     'allspark': Key('cmd-a cmd-v'),
     'allcopy': Key('cmd-a cmd-c'),
     'do park': [double_click, Key('cmd-v')],
+    'match park': Key('cmd-shift-alt-v'),
     'do koosh': [double_click, Key('cmd-c')],
 
 })
