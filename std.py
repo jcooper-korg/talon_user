@@ -33,7 +33,9 @@ mapping = {
 	'multi-' : 'multi',
 	'polly' : 'poly',
 	'numb' : 'num',
-	'portamento' : 'portamento', 
+	'you till': 'util',
+	'portamento' : 'portamento',
+	'regalo' : 'Regalo',
 }
 punctuation = set('.,-!?')
 
@@ -90,7 +92,7 @@ formatters = {
     # spinal or kebab?
     'kebab':  (True,  lambda i, word, _: word if i == 0 else '-'+word),
     # 'sentence':  (False, lambda i, word, _: word.capitalize() if i == 0 else word),
-    'title':  (False, lambda i, word, _: word.capitalize()),
+    'tridle':  (False, lambda i, word, _: word.capitalize()),		# jsc changed to tridle
     'allcaps': (False, lambda i, word, _: word.upper()),
     'dubstring': (False, surround('"')),
     'string': (False, surround("'")),
@@ -102,6 +104,7 @@ formatters = {
 	'cram': (True,  lambda i, word, _: word.lower() if i == 0 else word.capitalize()),
 	'spine': (True,  lambda i, word, _: word if i == 0 else '-'+word),
 	'yellsnik':  (True,  lambda i, word, _: word.upper() if i == 0 else '_'+word.upper()),
+    'yeller': (False, lambda i, word, _: word.upper()),
 }
 
 def FormatText(m):
@@ -333,7 +336,7 @@ keymap.update({
     'shebang bash': '#!/bin/bash -u\n',
 
     'new window': Key('cmd-n'),
-    'next window': Key('cmd-`'),
+    '(next window | gibby)': Key('cmd-`'),			# jsc added gibby
     '(last | preev) window': Key('cmd-shift-`'),	# jsc added prev
     'next app': Key('cmd-tab'),
     '(last | preev) app': Key('cmd-shift-tab'),		# jsc added prev
@@ -346,6 +349,8 @@ keymap.update({
 
     'scroll down': [Key('down')] * 30,
     'scroll up': [Key('up')] * 30,
+    
+    '(menu | swash) [<dgndictation>] [over]': [Key('ctrl-f2'), text, Key('down')],	# jsc added
 })
 
 #---- jsc added the following
