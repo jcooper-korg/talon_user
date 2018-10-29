@@ -2,24 +2,11 @@
 # jsc various modificiations as indicated
 
 from talon.voice import Word, Context, Key, Rep, RepPhrase, Str, press
-from talon import ctrl, clip
+from talon import app, ctrl, clip, ui
 from talon_init import TALON_HOME, TALON_PLUGINS, TALON_USER
 import string
 
-alpha_alt = 'arch brov char dell etch fomp goof hark ice jinx koop lug mowsh nerb ork pooch quosh rosh sun teak unks verge womp trex yang zooch'.split()
-#alpha_alt = 'air bat cap die each fail gone harm sit jury crash look mad near odd pit quest red sun trap urge vest whale box yes zip'.split()
-alnum = list(zip(alpha_alt, string.ascii_lowercase)) + [(str(i), str(i)) for i in range(0, 10)]
-
-alpha = {}
-alpha.update(dict(alnum))
-alpha.update({'ship %s' % word: letter for word, letter in zip(alpha_alt, string.ascii_uppercase)})
-alpha.update({'sky %s' % word: letter for word, letter in zip(alpha_alt, string.ascii_uppercase)})		# jsc added
-
-alpha.update({'control %s' % k: Key('ctrl-%s' % v) for k, v in alnum})
-alpha.update({'command %s' % k: Key('cmd-%s' % v) for k, v in alnum})
-alpha.update({'command shift %s' % k: Key('ctrl-shift-%s' % v) for k, v in alnum})
-alpha.update({'alt %s' % k: Key('alt-%s' % v) for k, v in alnum})
-
+# cleans up some Dragon output from <dgndictation>
 mapping = {
     'semicolon': ';',
     'new-line': '\n',
@@ -37,6 +24,7 @@ mapping = {
 	'portamento' : 'portamento',
 	'regalo' : 'Regalo',
 }
+# used for auto-spacing
 punctuation = set('.,-!?')
 
 def parse_word(word):
@@ -136,15 +124,17 @@ def FormatText(m):
     if not spaces:
         sep = ''
     Str(sep.join(words))(None)
-    
+
+def copy_bundle(m):
+    bundle = ui.active_app().bundle
+    clip.set(bundle)
+    app.notify('Copied app bundle', body='{}'.format(bundle))
+
 ctx = Context('input')
+ctx.keymap({
+    'say <dgndictation> [over]': text,
 
-keymap = {}
-keymap.update(alpha)
-keymap.update({
-    'phrase <dgndictation> [over]': text,
-
-    'sentence [<dgndictation>] [over]': sentence_text,
+    '(sentence | cap) <dgndictation> [over]': sentence_text,		# jsc added cap
     'comma <dgndictation> [over]': [', ', text],
     'period <dgndictation> [over]': ['. ', sentence_text],
     'more <dgndictation> [over]': [' ', text],
@@ -152,21 +142,15 @@ keymap.update({
 
     '(%s)+ [<dgndictation>]' % (' | '.join(formatters)): FormatText,
 
-    # jsc moved tab/arrow-keys to navigation.py
-
-    'delete': Key('backspace'),
+    # more keys and modifier keys are defined in basic_keys.py
 
     'slap': [Key('cmd-right enter')],
-    'enter': Key('enter'),
-    'escape': Key('esc'),
     'question [mark]': '?',
     'tilde': '~',
     '(bang | exclamation point)': '!',
     'dollar [sign]': '$',
     'downscore': '_',
-    '(semi | semicolon)': ';',
     'colon': ':',
-    '(square | left square [bracket])': '[', '(rsquare | are square | right square [bracket])': ']',
     '(paren | left paren)': '(', '(rparen | are paren | right paren)': ')',
     '(brace | left brace)': '{', '(rbrace | are brace | right brace)': '}',
     '(angle | left angle | less than)': '<', '(rangle | are angle | right angle | greater than)': '>',
@@ -180,13 +164,7 @@ keymap.update({
     'pipe': '|',
 
     '(dubquote | double quote)': '"',
-    'quote': "'",
     'triple quote': "'''",
-    '(dot | period)': '.',
-    'comma': ',',
-    'space': ' ',
-    '[forward] slash': '/',
-    'backslash': '\\',
 
     '(dot dot | dotdot)': '..',
     'cd': 'cd ',
@@ -294,14 +272,12 @@ keymap.update({
     'string utf8': "'utf8'",
     'state past': 'pass',
 
-    'equals': '=',
-    '(minus | dash)': '-',
     'plus': '+',
     'arrow': '->',
 #    'call': '()',			# jsc removed this
     'indirect': '&',
     'dereference': '*',
-    'op equals': ' = ',
+    '(op equals | assign)': ' = ',
     'op (minus | subtract)': ' - ',
     'op (plus | add)': ' + ',
     'op (times | multiply)': ' * ',
@@ -350,5 +326,7 @@ keymap.update({
     'scroll down': [Key('down')] * 30,
     'scroll up': [Key('up')] * 30,
     
+    'copy active bundle': copy_bundle,
+
     '(menu | swash) [<dgndictation>] [over]': [Key('ctrl-f2'), text, Key('down')],	# jsc added
 })
