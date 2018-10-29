@@ -20,7 +20,7 @@ def switch_app(m, name=None):		# jsc modified
 
 ctx = Context('switcher')
 keymap = {
-    'focus {switcher.apps}': switch_app,
+    '(focus | fox) {switcher.apps}': switch_app,
     # jsc additions:
     'cody': lambda x: switch_app(x, "Xcode"),
     'maylap': lambda x: switch_app(x, "Mail"),
