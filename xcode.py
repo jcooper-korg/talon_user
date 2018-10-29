@@ -42,5 +42,6 @@ ctx.keymap({
     '(partial word right | subword right | wonkrish)': Key('alt-ctrl-right'),
 
 	'show blame for line': Key('cmd-alt-ctrl-b'),
+	'(reveal file | show file in finder)': Key('cmd-alt-ctrl-shift-f'),
 	'(snipline | delete line)': Key('cmd-alt-ctrl-shift-backspace'),
 })
