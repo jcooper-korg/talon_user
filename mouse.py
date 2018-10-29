@@ -1,10 +1,10 @@
 # from https://github.com/talonvoice/examples
 # jsc added shift-click, command-click, and voice code compatibility
 
-# import eye
 import time
 from talon import ctrl, tap
 from talon.voice import Context
+from talon_plugins import eye_mouse
 ctx = Context('mouse')
 
 x, y = ctrl.mouse_pos()
@@ -25,26 +25,13 @@ def click_pos(m):
     return pos[:2]
 
 def delayed_click(m, button=0, times=1):
-    # old = eye.config.control_mouse
-    # eye.config.control_mouse = False
-    # x, y = click_pos(m)
-    # ctrl.mouse(x, y)
+    old = eye_mouse.config.control_mouse
+    eye_mouse.config.control_mouse = False
+    x, y = click_pos(m)
+    ctrl.mouse(x, y)
     ctrl.mouse_click(x, y, button=button, times=times, wait=16000)
-    # time.sleep(0.032)
-    # eye.config.control_mouse = old
-
-# jsc added
-def press_key_and_click(m, key, button=0, times=1):
-    ctrl.key_press(key, down=True)
-    ctrl.mouse_click(x, y, button=button, times=times, wait=16000)
-    ctrl.key_press(key, up=True)
-
-# jsc added
-def shift_click(m, button=0, times=1):
-    press_key_and_click(m, 'shift', button, times)
-
-def command_click(m, button=0, times=1):
-    press_key_and_click(m, 'cmd', button, times)
+    time.sleep(0.032)
+    eye_mouse.config.control_mouse = old
 
 def delayed_right_click(m):
     delayed_click(m, button=1)
@@ -62,6 +49,18 @@ def mouse_drag(m):
 def mouse_release(m):
     x, y = click_pos(m)
     ctrl.mouse_click(x, y, up=True)
+
+# jsc added
+def press_key_and_click(m, key, button=0, times=1):
+    ctrl.key_press(key, down=True)
+    ctrl.mouse_click(x, y, button=button, times=times, wait=16000)
+    ctrl.key_press(key, up=True)
+	
+def shift_click(m, button=0, times=1):
+    press_key_and_click(m, 'shift', button, times)
+
+def command_click(m, button=0, times=1):
+    press_key_and_click(m, 'cmd', button, times)
 
 keymap = {
 	# jsc modified with some voice-code compatibility
