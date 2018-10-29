@@ -62,7 +62,9 @@ keymap = {
     'const': 'const ',
     'static': 'static ',
     'tip pent': 'int ',
-	
+    'static cast': ['static_cast<>()', Key('left'), Key('left'), Key('left')],
+	'static cast pointer': ['static_cast<*>()', Key('left'), Key('left'), Key('left'), Key('left')],
+
     'word no': 'null',
     'word printf': 'printf',
     'word define': 'def ',
