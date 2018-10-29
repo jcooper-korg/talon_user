@@ -6,13 +6,16 @@ from talon.voice import Context, ContextGroup, talon
 from talon.engine import engine
 from talon import app
 
+def Mimic(phrase):
+    engine.mimic(phrase.split())
+
 def set_enabled(enable):
     if enable:
         talon.enable()
-        engine.mimic('go to sleep'.split(' '))
+        Mimic('go to sleep')
         app.icon_color(0, 0.7, 0, 1)
     else:
-        engine.mimic('wake up'.split(' '))
+        Mimic('wake up')
         talon.disable()
         app.icon_color(1, 0, 0, 1)
     lib.menu_check(b'!Enable Speech Recognition', enable)
